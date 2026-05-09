@@ -1,0 +1,412 @@
+[       0ms] [INIT          ] === AudioCtl debug session started === log: audio.log
+[       0ms] [INIT          ] Timestamp format: elapsed ms since app start | category | message
+[       0ms] [INIT          ] AudioCtl starting up
+[       0ms] [INIT          ] CLI args: tick_rate=250ms no_health_check=false debug=Some("audio.log")
+[       0ms] [INIT          ] Checking if pactl is in PATH
+[       0ms] [INIT          ] pactl found at: /usr/bin/pactl
+[       0ms] [INIT          ] Running health check (pactl info)
+[       0ms] [BACKEND       ] check_health: running pactl info
+[       0ms] [PACTL         ] >> pactl info
+[       4ms] [PACTL         ] << exit=0 stdout_bytes=456 stderr_bytes=0
+[       4ms] [BACKEND       ] check_health pactl info output:
+Server String: /run/user/1000/pulse/native
+Library Protocol Version: 35
+Server Protocol Version: 35
+Is Local: yes
+Client Index: 363
+Tile Size: 65472
+User Name: stealthspectre
+Host Name: msi-gp65leopard
+Server Name: PulseAudio (on PipeWire 1.6.4)
+Server Version: 15.0.0
+Default Sample Specification: float32le 2ch 48000Hz
+Default Channel Map: front-left,front-right
+Default Sink: combined_all
+Default Source: bluez_input.60:55:56:54:3F:A0
+Cookie: 191b:31c7
+
+[       4ms] [BACKEND       ] check_health server_name="PulseAudio (on PipeWire 1.6.4)"
+[       4ms] [INIT          ] Health check passed: server="PulseAudio (on PipeWire 1.6.4)"
+[       4ms] [INIT          ] App created, fetching initial state
+[       4ms] [────────────  ] ──── fetch_state ────
+[       4ms] [BACKEND       ] Starting concurrent pactl queries (sinks, sink-inputs, modules, info)
+[       4ms] [PACTL         ] >> pactl --format=json list sinks
+[       5ms] [PACTL         ] >> pactl --format=json list sink-inputs
+[       5ms] [PACTL         ] >> pactl --format=json list modules
+[       5ms] [PACTL         ] >> pactl info
+[      11ms] [PACTL         ] << exit=0 stdout_bytes=456 stderr_bytes=0
+[      11ms] [PACTL         ] << exit=0 stdout_bytes=7784 stderr_bytes=0
+[      11ms] [PACTL         ] << exit=0 stdout_bytes=6029 stderr_bytes=0
+[      12ms] [PACTL         ] << exit=0 stdout_bytes=6851 stderr_bytes=0
+[      12ms] [BACKEND       ] All pactl queries succeeded
+[      12ms] [PARSE         ] sinks JSON  : 6851 bytes
+[      12ms] [PARSE         ] sinks JSON preview: [{"index":53,"state":"RUNNING","name":"alsa_output.pci-0000_00_1f.3.analog-stereo","description":"Built-in Audio Analog Stereo","driver":"PipeWire","sample_specification":"s32le 2ch 48000Hz","channel_map":"front-left,front-right","owner_module":4294967295,"mute":false,"volume":{"front-left":{"value":49151,"value_percent":"75%","db":"-7.50 dB"},"front-right":{"value":49151,"value_percent":"75%","db…[+6451]
+[      12ms] [PARSE         ] sink-inputs : 6029 bytes
+[      12ms] [PARSE         ] sink-inputs preview: [{"index":96,"driver":"PipeWire","owner_module":null,"client":"65","sink":299,"sample_specification":"float32le 2ch 48000Hz","channel_map":"front-left,front-right","format":"pcm, format.sample_format …[+5829]
+[      12ms] [PARSE         ] modules JSON: 7784 bytes
+[      12ms] [PARSE         ] info output : Server String: /run/user/1000/pulse/native↵Library Protocol Version: 35↵Server Protocol Version: 35↵Is Local: yes↵Client Index: 367↵Tile Size: 65472↵User Name: stealthspectre↵Host Name: msi-gp65leopard↵Server Name: PulseAudio (on PipeWire 1.6.4)↵Server Version: 15.0.0↵Default Sample Specification: f…[+156]
+[      12ms] [PARSER        ] parse_default_sink from 456 chars
+[      12ms] [PARSER        ] parse_default_sink found: "combined_all"
+[      12ms] [PARSE         ] default_sink name = "combined_all"
+[      12ms] [PARSER        ] parse_sinks: json_len=6851 default="combined_all"
+[      12ms] [PARSER        ] parse_sinks: first sink JSON keys = ["active_port", "balance", "base_volume", "channel_map", "description", "driver", "flags", "formats", "index", "latency", "monitor_source", "mute", "name", "owner_module", "ports", "properties", "sample_specification", "state", "volume"]
+[      12ms] [PARSE         ] parse_sinks OK: 3 device(s)
+[      12ms] [DEVICE        ]   idx=53 name="alsa_output.pci-0000_00_1f.3.analog-stereo" type=Physical status=Running is_default=false
+[      12ms] [DEVICE        ]   idx=185 name="bluez_output.60_55_56_54_3F_A0.1" type=Bluetooth status=Running is_default=false
+[      12ms] [DEVICE        ]   idx=299 name="combined_all" type=Combined status=Running is_default=true
+[      12ms] [PARSER        ] parse_combined_groups: json_len=7784
+[      12ms] [PARSER        ] parse_combined_groups: 18 total modules
+[      12ms] [PARSER        ] parse_combined_groups: 1 module-combine-sink entries
+[      12ms] [PARSE         ] parse_combined_groups OK: 1 group(s)
+[      12ms] [COMBINED      ]   module=0 sink_name="combined_all" members=["alsa_output.pci-0000_00_1f.3.analog-stereo", "bluez_output.60_55_56_54_3F_A0.1"]
+[      12ms] [COMBINED      ]   Marked device "alsa_output.pci-0000_00_1f.3.analog-stereo" as member of group 0
+[      12ms] [COMBINED      ]   Marked device "bluez_output.60_55_56_54_3F_A0.1" as member of group 0
+[      12ms] [PARSER        ] parse_sink_inputs: json_len=6029
+[      12ms] [PARSE         ] parse_sink_inputs OK: 4 stream(s)
+[      12ms] [STREAM        ]   idx=96 app="Zen" sink_idx=299
+[      12ms] [STREAM        ]   idx=148 app="Unknown App" sink_idx=299
+[      12ms] [STREAM        ]   idx=300 app="Unknown App" sink_idx=53
+[      12ms] [STREAM        ]   idx=301 app="Unknown App" sink_idx=185
+[      12ms] [BACKEND       ] fetch_state complete: 3 devices, 4 streams, 1 combined groups
+[      12ms] [────────────  ] ──── fetch_state END ────
+[      12ms] [INIT          ] Initial fetch OK: 3 devices, 4 streams
+[      12ms] [BACKEND       ] check_health: running pactl info
+[      12ms] [PACTL         ] >> pactl info
+[      16ms] [PACTL         ] << exit=0 stdout_bytes=456 stderr_bytes=0
+[      16ms] [BACKEND       ] check_health pactl info output:
+Server String: /run/user/1000/pulse/native
+Library Protocol Version: 35
+Server Protocol Version: 35
+Is Local: yes
+Client Index: 368
+Tile Size: 65472
+User Name: stealthspectre
+Host Name: msi-gp65leopard
+Server Name: PulseAudio (on PipeWire 1.6.4)
+Server Version: 15.0.0
+Default Sample Specification: float32le 2ch 48000Hz
+Default Channel Map: front-left,front-right
+Default Sink: combined_all
+Default Source: bluez_input.60:55:56:54:3F:A0
+Cookie: 191b:31c7
+
+[      16ms] [BACKEND       ] check_health server_name="PulseAudio (on PipeWire 1.6.4)"
+[      16ms] [INIT          ] Entering TUI — setting up terminal
+[      16ms] [INIT          ] Terminal ready, starting event loop
+[      16ms] [LOOP          ] Event loop started, tick_rate=250ms
+[    1612ms] [LOOP          ] Raw event: Key(KeyEvent { code: Down, modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[    1612ms] [KEY           ] screen=Home code=Down modifiers=KeyModifiers(0x0)
+[    2311ms] [LOOP          ] Raw event: Key(KeyEvent { code: Down, modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[    2311ms] [KEY           ] screen=Home code=Down modifiers=KeyModifiers(0x0)
+[    2633ms] [LOOP          ] Raw event: Key(KeyEvent { code: Up, modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[    2633ms] [KEY           ] screen=Home code=Up modifiers=KeyModifiers(0x0)
+[    2875ms] [LOOP          ] Raw event: Key(KeyEvent { code: Right, modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[    2875ms] [KEY           ] screen=Home code=Right modifiers=KeyModifiers(0x0)
+[    4049ms] [LOOP          ] Raw event: Key(KeyEvent { code: Char('d'), modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[    4049ms] [KEY           ] screen=Home code=Char('d') modifiers=KeyModifiers(0x0)
+[    4049ms] [NAV           ] navigate_to Devices (from Home)
+[    4541ms] [LOOP          ] Raw event: Key(KeyEvent { code: Down, modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[    4541ms] [KEY           ] screen=Devices code=Down modifiers=KeyModifiers(0x0)
+[    5142ms] [LOOP          ] Raw event: Key(KeyEvent { code: Down, modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[    5142ms] [KEY           ] screen=Devices code=Down modifiers=KeyModifiers(0x0)
+[    9342ms] [LOOP          ] Raw event: Key(KeyEvent { code: Char('D'), modifiers: KeyModifiers(SHIFT), kind: Press, state: KeyEventState(0x0) })
+[    9342ms] [KEY           ] screen=Devices code=Char('D') modifiers=KeyModifiers(SHIFT)
+[   10578ms] [LOOP          ] Raw event: Key(KeyEvent { code: Esc, modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   10578ms] [KEY           ] screen=Confirm(SetDefault { sink_name: "combined_all", move_streams: true }) code=Esc modifiers=KeyModifiers(0x0)
+[   12716ms] [LOOP          ] Raw event: Key(KeyEvent { code: Char('m'), modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   12717ms] [KEY           ] screen=Devices code=Char('m') modifiers=KeyModifiers(0x0)
+[   14578ms] [LOOP          ] Raw event: Key(KeyEvent { code: Esc, modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   14578ms] [KEY           ] screen=Confirm(MoveAllStreams { sink_name: "combined_all" }) code=Esc modifiers=KeyModifiers(0x0)
+[   16980ms] [LOOP          ] Raw event: Key(KeyEvent { code: Up, modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   16980ms] [KEY           ] screen=Devices code=Up modifiers=KeyModifiers(0x0)
+[   17804ms] [LOOP          ] Raw event: Key(KeyEvent { code: Down, modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   17804ms] [KEY           ] screen=Devices code=Down modifiers=KeyModifiers(0x0)
+[   19111ms] [LOOP          ] Raw event: Key(KeyEvent { code: Char('/'), modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   19111ms] [KEY           ] screen=Devices code=Char('/') modifiers=KeyModifiers(0x0)
+[   20535ms] [LOOP          ] Raw event: Key(KeyEvent { code: Char('b'), modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   20535ms] [KEY           ] screen=Devices code=Char('b') modifiers=KeyModifiers(0x0)
+[   20921ms] [LOOP          ] Raw event: Key(KeyEvent { code: Backspace, modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   20921ms] [KEY           ] screen=Devices code=Backspace modifiers=KeyModifiers(0x0)
+[   21091ms] [LOOP          ] Raw event: Key(KeyEvent { code: Char('r'), modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   21091ms] [KEY           ] screen=Devices code=Char('r') modifiers=KeyModifiers(0x0)
+[   21189ms] [LOOP          ] Raw event: Key(KeyEvent { code: Char('e'), modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   21189ms] [KEY           ] screen=Devices code=Char('e') modifiers=KeyModifiers(0x0)
+[   21751ms] [LOOP          ] Raw event: Key(KeyEvent { code: Backspace, modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   21751ms] [KEY           ] screen=Devices code=Backspace modifiers=KeyModifiers(0x0)
+[   21930ms] [LOOP          ] Raw event: Key(KeyEvent { code: Backspace, modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   21930ms] [KEY           ] screen=Devices code=Backspace modifiers=KeyModifiers(0x0)
+[   22082ms] [LOOP          ] Raw event: Key(KeyEvent { code: Backspace, modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   22082ms] [KEY           ] screen=Devices code=Backspace modifiers=KeyModifiers(0x0)
+[   22164ms] [LOOP          ] Raw event: Key(KeyEvent { code: Esc, modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   22164ms] [KEY           ] screen=Devices code=Esc modifiers=KeyModifiers(0x0)
+[   22816ms] [LOOP          ] Raw event: Key(KeyEvent { code: Down, modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   22816ms] [KEY           ] screen=Devices code=Down modifiers=KeyModifiers(0x0)
+[   23542ms] [LOOP          ] Raw event: Key(KeyEvent { code: Down, modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   23542ms] [KEY           ] screen=Devices code=Down modifiers=KeyModifiers(0x0)
+[   26461ms] [LOOP          ] Raw event: Key(KeyEvent { code: Enter, modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   26462ms] [KEY           ] screen=Devices code=Enter modifiers=KeyModifiers(0x0)
+[   27500ms] [LOOP          ] Raw event: Key(KeyEvent { code: Char('d'), modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   27500ms] [KEY           ] screen=Devices code=Char('d') modifiers=KeyModifiers(0x0)
+[   28573ms] [LOOP          ] Raw event: Key(KeyEvent { code: Char('a'), modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   28573ms] [KEY           ] screen=Confirm(SetDefault { sink_name: "combined_all", move_streams: false }) code=Char('a') modifiers=KeyModifiers(0x0)
+[   28904ms] [LOOP          ] Raw event: Key(KeyEvent { code: Esc, modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   28904ms] [KEY           ] screen=Confirm(SetDefault { sink_name: "combined_all", move_streams: false }) code=Esc modifiers=KeyModifiers(0x0)
+[   33884ms] [LOOP          ] Raw event: Key(KeyEvent { code: Up, modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   33884ms] [KEY           ] screen=Devices code=Up modifiers=KeyModifiers(0x0)
+[   34412ms] [LOOP          ] Raw event: Key(KeyEvent { code: Down, modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   34412ms] [KEY           ] screen=Devices code=Down modifiers=KeyModifiers(0x0)
+[   34878ms] [LOOP          ] Raw event: Key(KeyEvent { code: Up, modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   34878ms] [KEY           ] screen=Devices code=Up modifiers=KeyModifiers(0x0)
+[   37064ms] [LOOP          ] Raw event: Key(KeyEvent { code: Enter, modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   37064ms] [KEY           ] screen=Devices code=Enter modifiers=KeyModifiers(0x0)
+[   38327ms] [LOOP          ] Raw event: Key(KeyEvent { code: Up, modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   38327ms] [KEY           ] screen=Devices code=Up modifiers=KeyModifiers(0x0)
+[   38640ms] [LOOP          ] Raw event: Key(KeyEvent { code: Down, modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   38640ms] [KEY           ] screen=Devices code=Down modifiers=KeyModifiers(0x0)
+[   39167ms] [LOOP          ] Raw event: Key(KeyEvent { code: Up, modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   39167ms] [KEY           ] screen=Devices code=Up modifiers=KeyModifiers(0x0)
+[   39919ms] [LOOP          ] Raw event: Key(KeyEvent { code: Down, modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   39919ms] [KEY           ] screen=Devices code=Down modifiers=KeyModifiers(0x0)
+[   40285ms] [LOOP          ] Raw event: Key(KeyEvent { code: Down, modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   40285ms] [KEY           ] screen=Devices code=Down modifiers=KeyModifiers(0x0)
+[   45306ms] [LOOP          ] Raw event: Key(KeyEvent { code: Up, modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   45306ms] [KEY           ] screen=Devices code=Up modifiers=KeyModifiers(0x0)
+[   70205ms] [LOOP          ] Raw event: Key(KeyEvent { code: Esc, modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   70205ms] [KEY           ] screen=Devices code=Esc modifiers=KeyModifiers(0x0)
+[   70205ms] [NAV           ] go_home (from Devices)
+[   70788ms] [LOOP          ] Raw event: Key(KeyEvent { code: Char('s'), modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   70788ms] [KEY           ] screen=Home code=Char('s') modifiers=KeyModifiers(0x0)
+[   70788ms] [NAV           ] navigate_to Streams (from Home)
+[   71871ms] [LOOP          ] Raw event: Key(KeyEvent { code: Down, modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   71871ms] [KEY           ] screen=Streams code=Down modifiers=KeyModifiers(0x0)
+[   72193ms] [LOOP          ] Raw event: Key(KeyEvent { code: Up, modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   72193ms] [KEY           ] screen=Streams code=Up modifiers=KeyModifiers(0x0)
+[   74441ms] [LOOP          ] Raw event: Key(KeyEvent { code: Enter, modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   74441ms] [KEY           ] screen=Streams code=Enter modifiers=KeyModifiers(0x0)
+[   74441ms] [ACTION        ] move_stream_to(stream=96, sink="combined_all")
+[   74441ms] [PACTL         ] >> pactl move-sink-input 96 combined_all
+[   74446ms] [PACTL         ] << exit=0 stdout_bytes=0 stderr_bytes=0
+[   74446ms] [NOTIFY        ] [Success] Stream moved to 'combined_all'.
+[   74446ms] [────────────  ] ──── action_refresh ────
+[   74446ms] [APP           ] action_refresh called
+[   74446ms] [────────────  ] ──── fetch_state ────
+[   74446ms] [BACKEND       ] Starting concurrent pactl queries (sinks, sink-inputs, modules, info)
+[   74446ms] [PACTL         ] >> pactl --format=json list sinks
+[   74446ms] [PACTL         ] >> pactl --format=json list sink-inputs
+[   74446ms] [PACTL         ] >> pactl --format=json list modules
+[   74446ms] [PACTL         ] >> pactl info
+[   74454ms] [PACTL         ] << exit=0 stdout_bytes=456 stderr_bytes=0
+[   74454ms] [PACTL         ] << exit=0 stdout_bytes=7773 stderr_bytes=0
+[   74454ms] [PACTL         ] << exit=0 stdout_bytes=6851 stderr_bytes=0
+[   74454ms] [PACTL         ] << exit=0 stdout_bytes=7784 stderr_bytes=0
+[   74454ms] [BACKEND       ] All pactl queries succeeded
+[   74454ms] [PARSE         ] sinks JSON  : 6851 bytes
+[   74454ms] [PARSE         ] sinks JSON preview: [{"index":53,"state":"RUNNING","name":"alsa_output.pci-0000_00_1f.3.analog-stereo","description":"Built-in Audio Analog Stereo","driver":"PipeWire","sample_specification":"s32le 2ch 48000Hz","channel_map":"front-left,front-right","owner_module":4294967295,"mute":false,"volume":{"front-left":{"value":49151,"value_percent":"75%","db":"-7.50 dB"},"front-right":{"value":49151,"value_percent":"75%","db…[+6451]
+[   74454ms] [PARSE         ] sink-inputs : 7773 bytes
+[   74454ms] [PARSE         ] sink-inputs preview: [{"index":96,"driver":"PipeWire","owner_module":null,"client":"65","sink":299,"sample_specification":"float32le 2ch 48000Hz","channel_map":"front-left,front-right","format":"pcm, format.sample_format …[+7573]
+[   74454ms] [PARSE         ] modules JSON: 7784 bytes
+[   74454ms] [PARSE         ] info output : Server String: /run/user/1000/pulse/native↵Library Protocol Version: 35↵Server Protocol Version: 35↵Is Local: yes↵Client Index: 377↵Tile Size: 65472↵User Name: stealthspectre↵Host Name: msi-gp65leopard↵Server Name: PulseAudio (on PipeWire 1.6.4)↵Server Version: 15.0.0↵Default Sample Specification: f…[+156]
+[   74454ms] [PARSER        ] parse_default_sink from 456 chars
+[   74454ms] [PARSER        ] parse_default_sink found: "combined_all"
+[   74454ms] [PARSE         ] default_sink name = "combined_all"
+[   74454ms] [PARSER        ] parse_sinks: json_len=6851 default="combined_all"
+[   74454ms] [PARSER        ] parse_sinks: first sink JSON keys = ["active_port", "balance", "base_volume", "channel_map", "description", "driver", "flags", "formats", "index", "latency", "monitor_source", "mute", "name", "owner_module", "ports", "properties", "sample_specification", "state", "volume"]
+[   74454ms] [PARSE         ] parse_sinks OK: 3 device(s)
+[   74454ms] [DEVICE        ]   idx=53 name="alsa_output.pci-0000_00_1f.3.analog-stereo" type=Physical status=Running is_default=false
+[   74454ms] [DEVICE        ]   idx=185 name="bluez_output.60_55_56_54_3F_A0.1" type=Bluetooth status=Running is_default=false
+[   74454ms] [DEVICE        ]   idx=299 name="combined_all" type=Combined status=Running is_default=true
+[   74454ms] [PARSER        ] parse_combined_groups: json_len=7784
+[   74454ms] [PARSER        ] parse_combined_groups: 18 total modules
+[   74454ms] [PARSER        ] parse_combined_groups: 1 module-combine-sink entries
+[   74454ms] [PARSE         ] parse_combined_groups OK: 1 group(s)
+[   74454ms] [COMBINED      ]   module=0 sink_name="combined_all" members=["alsa_output.pci-0000_00_1f.3.analog-stereo", "bluez_output.60_55_56_54_3F_A0.1"]
+[   74454ms] [COMBINED      ]   Marked device "alsa_output.pci-0000_00_1f.3.analog-stereo" as member of group 0
+[   74454ms] [COMBINED      ]   Marked device "bluez_output.60_55_56_54_3F_A0.1" as member of group 0
+[   74454ms] [PARSER        ] parse_sink_inputs: json_len=7773
+[   74454ms] [PARSE         ] parse_sink_inputs OK: 5 stream(s)
+[   74454ms] [STREAM        ]   idx=96 app="Zen" sink_idx=299
+[   74454ms] [STREAM        ]   idx=148 app="Unknown App" sink_idx=299
+[   74454ms] [STREAM        ]   idx=300 app="Unknown App" sink_idx=53
+[   74454ms] [STREAM        ]   idx=301 app="Unknown App" sink_idx=185
+[   74454ms] [STREAM        ]   idx=369 app="Zen" sink_idx=299
+[   74454ms] [BACKEND       ] fetch_state complete: 3 devices, 5 streams, 1 combined groups
+[   74454ms] [────────────  ] ──── fetch_state END ────
+[   74454ms] [APP           ] action_refresh OK: 3 devices, 5 streams, 1 combined, default="combined_all"
+[   74454ms] [APP           ] action_refresh done, loading=false
+[   74454ms] [LOOP          ] Event handler requested redraw/refresh
+[   77567ms] [LOOP          ] Raw event: Key(KeyEvent { code: Enter, modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   77567ms] [KEY           ] screen=Streams code=Enter modifiers=KeyModifiers(0x0)
+[   77567ms] [ACTION        ] move_stream_to(stream=96, sink="combined_all")
+[   77567ms] [PACTL         ] >> pactl move-sink-input 96 combined_all
+[   77572ms] [PACTL         ] << exit=0 stdout_bytes=0 stderr_bytes=0
+[   77572ms] [NOTIFY        ] [Success] Stream moved to 'combined_all'.
+[   77572ms] [────────────  ] ──── action_refresh ────
+[   77572ms] [APP           ] action_refresh called
+[   77572ms] [────────────  ] ──── fetch_state ────
+[   77572ms] [BACKEND       ] Starting concurrent pactl queries (sinks, sink-inputs, modules, info)
+[   77572ms] [PACTL         ] >> pactl --format=json list sinks
+[   77572ms] [PACTL         ] >> pactl --format=json list sink-inputs
+[   77572ms] [PACTL         ] >> pactl --format=json list modules
+[   77572ms] [PACTL         ] >> pactl info
+[   77578ms] [PACTL         ] << exit=0 stdout_bytes=456 stderr_bytes=0
+[   77578ms] [PACTL         ] << exit=0 stdout_bytes=7773 stderr_bytes=0
+[   77578ms] [PACTL         ] << exit=0 stdout_bytes=7784 stderr_bytes=0
+[   77578ms] [PACTL         ] << exit=0 stdout_bytes=6851 stderr_bytes=0
+[   77578ms] [BACKEND       ] All pactl queries succeeded
+[   77578ms] [PARSE         ] sinks JSON  : 6851 bytes
+[   77578ms] [PARSE         ] sinks JSON preview: [{"index":53,"state":"RUNNING","name":"alsa_output.pci-0000_00_1f.3.analog-stereo","description":"Built-in Audio Analog Stereo","driver":"PipeWire","sample_specification":"s32le 2ch 48000Hz","channel_map":"front-left,front-right","owner_module":4294967295,"mute":false,"volume":{"front-left":{"value":49151,"value_percent":"75%","db":"-7.50 dB"},"front-right":{"value":49151,"value_percent":"75%","db…[+6451]
+[   77578ms] [PARSE         ] sink-inputs : 7773 bytes
+[   77578ms] [PARSE         ] sink-inputs preview: [{"index":96,"driver":"PipeWire","owner_module":null,"client":"65","sink":299,"sample_specification":"float32le 2ch 48000Hz","channel_map":"front-left,front-right","format":"pcm, format.sample_format …[+7573]
+[   77578ms] [PARSE         ] modules JSON: 7784 bytes
+[   77578ms] [PARSE         ] info output : Server String: /run/user/1000/pulse/native↵Library Protocol Version: 35↵Server Protocol Version: 35↵Is Local: yes↵Client Index: 383↵Tile Size: 65472↵User Name: stealthspectre↵Host Name: msi-gp65leopard↵Server Name: PulseAudio (on PipeWire 1.6.4)↵Server Version: 15.0.0↵Default Sample Specification: f…[+156]
+[   77578ms] [PARSER        ] parse_default_sink from 456 chars
+[   77578ms] [PARSER        ] parse_default_sink found: "combined_all"
+[   77578ms] [PARSE         ] default_sink name = "combined_all"
+[   77578ms] [PARSER        ] parse_sinks: json_len=6851 default="combined_all"
+[   77578ms] [PARSER        ] parse_sinks: first sink JSON keys = ["active_port", "balance", "base_volume", "channel_map", "description", "driver", "flags", "formats", "index", "latency", "monitor_source", "mute", "name", "owner_module", "ports", "properties", "sample_specification", "state", "volume"]
+[   77578ms] [PARSE         ] parse_sinks OK: 3 device(s)
+[   77578ms] [DEVICE        ]   idx=53 name="alsa_output.pci-0000_00_1f.3.analog-stereo" type=Physical status=Running is_default=false
+[   77578ms] [DEVICE        ]   idx=185 name="bluez_output.60_55_56_54_3F_A0.1" type=Bluetooth status=Running is_default=false
+[   77578ms] [DEVICE        ]   idx=299 name="combined_all" type=Combined status=Running is_default=true
+[   77578ms] [PARSER        ] parse_combined_groups: json_len=7784
+[   77578ms] [PARSER        ] parse_combined_groups: 18 total modules
+[   77578ms] [PARSER        ] parse_combined_groups: 1 module-combine-sink entries
+[   77579ms] [PARSE         ] parse_combined_groups OK: 1 group(s)
+[   77579ms] [COMBINED      ]   module=0 sink_name="combined_all" members=["alsa_output.pci-0000_00_1f.3.analog-stereo", "bluez_output.60_55_56_54_3F_A0.1"]
+[   77579ms] [COMBINED      ]   Marked device "alsa_output.pci-0000_00_1f.3.analog-stereo" as member of group 0
+[   77579ms] [COMBINED      ]   Marked device "bluez_output.60_55_56_54_3F_A0.1" as member of group 0
+[   77579ms] [PARSER        ] parse_sink_inputs: json_len=7773
+[   77579ms] [PARSE         ] parse_sink_inputs OK: 5 stream(s)
+[   77579ms] [STREAM        ]   idx=96 app="Zen" sink_idx=299
+[   77579ms] [STREAM        ]   idx=148 app="Unknown App" sink_idx=299
+[   77579ms] [STREAM        ]   idx=300 app="Unknown App" sink_idx=53
+[   77579ms] [STREAM        ]   idx=301 app="Unknown App" sink_idx=185
+[   77579ms] [STREAM        ]   idx=369 app="Zen" sink_idx=299
+[   77579ms] [BACKEND       ] fetch_state complete: 3 devices, 5 streams, 1 combined groups
+[   77579ms] [────────────  ] ──── fetch_state END ────
+[   77579ms] [APP           ] action_refresh OK: 3 devices, 5 streams, 1 combined, default="combined_all"
+[   77579ms] [APP           ] action_refresh done, loading=false
+[   77579ms] [LOOP          ] Event handler requested redraw/refresh
+[   78391ms] [LOOP          ] Raw event: Key(KeyEvent { code: Char('m'), modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   78391ms] [KEY           ] screen=Streams code=Char('m') modifiers=KeyModifiers(0x0)
+[   81275ms] [LOOP          ] Raw event: Key(KeyEvent { code: Right, modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   81275ms] [KEY           ] screen=Confirm(MoveAllStreams { sink_name: "combined_all" }) code=Right modifiers=KeyModifiers(0x0)
+[   82377ms] [LOOP          ] Raw event: Key(KeyEvent { code: Char('n'), modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   82377ms] [KEY           ] screen=Confirm(MoveAllStreams { sink_name: "combined_all" }) code=Char('n') modifiers=KeyModifiers(0x0)
+[   88135ms] [LOOP          ] Raw event: Key(KeyEvent { code: Down, modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   88135ms] [KEY           ] screen=Devices code=Down modifiers=KeyModifiers(0x0)
+[   88593ms] [LOOP          ] Raw event: Key(KeyEvent { code: Up, modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   88593ms] [KEY           ] screen=Devices code=Up modifiers=KeyModifiers(0x0)
+[   89793ms] [LOOP          ] Raw event: Key(KeyEvent { code: Esc, modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   89793ms] [KEY           ] screen=Devices code=Esc modifiers=KeyModifiers(0x0)
+[   89793ms] [NAV           ] go_home (from Devices)
+[   90761ms] [LOOP          ] Raw event: Key(KeyEvent { code: Char('s'), modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   90761ms] [KEY           ] screen=Home code=Char('s') modifiers=KeyModifiers(0x0)
+[   90761ms] [NAV           ] navigate_to Streams (from Home)
+[   91755ms] [LOOP          ] Raw event: Key(KeyEvent { code: Down, modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   91755ms] [KEY           ] screen=Streams code=Down modifiers=KeyModifiers(0x0)
+[   92095ms] [LOOP          ] Raw event: Key(KeyEvent { code: Up, modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   92095ms] [KEY           ] screen=Streams code=Up modifiers=KeyModifiers(0x0)
+[   94297ms] [LOOP          ] Raw event: Key(KeyEvent { code: Char('j'), modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   94298ms] [KEY           ] screen=Streams code=Char('j') modifiers=KeyModifiers(0x0)
+[   94442ms] [LOOP          ] Raw event: Key(KeyEvent { code: Char('k'), modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   94442ms] [KEY           ] screen=Streams code=Char('k') modifiers=KeyModifiers(0x0)
+[   94540ms] [LOOP          ] Raw event: Key(KeyEvent { code: Char('j'), modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   94540ms] [KEY           ] screen=Streams code=Char('j') modifiers=KeyModifiers(0x0)
+[   94943ms] [LOOP          ] Raw event: Key(KeyEvent { code: Char('j'), modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   94943ms] [KEY           ] screen=Streams code=Char('j') modifiers=KeyModifiers(0x0)
+[   95266ms] [LOOP          ] Raw event: Key(KeyEvent { code: Char('k'), modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   95266ms] [KEY           ] screen=Streams code=Char('k') modifiers=KeyModifiers(0x0)
+[   95436ms] [LOOP          ] Raw event: Key(KeyEvent { code: Char('k'), modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   95436ms] [KEY           ] screen=Streams code=Char('k') modifiers=KeyModifiers(0x0)
+[   99216ms] [LOOP          ] Raw event: Key(KeyEvent { code: Char('d'), modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[   99216ms] [KEY           ] screen=Streams code=Char('d') modifiers=KeyModifiers(0x0)
+[   99216ms] [NAV           ] navigate_to Devices (from Streams)
+[  102198ms] [LOOP          ] Raw event: Key(KeyEvent { code: Enter, modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[  102198ms] [KEY           ] screen=Devices code=Enter modifiers=KeyModifiers(0x0)
+[  105047ms] [LOOP          ] Raw event: Key(KeyEvent { code: Char('d'), modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[  105047ms] [KEY           ] screen=Devices code=Char('d') modifiers=KeyModifiers(0x0)
+[  107626ms] [LOOP          ] Raw event: Key(KeyEvent { code: Enter, modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[  107626ms] [KEY           ] screen=Confirm(SetDefault { sink_name: "bluez_output.60_55_56_54_3F_A0.1", move_streams: false }) code=Enter modifiers=KeyModifiers(0x0)
+[  107626ms] [ACTION        ] set_default_sink("bluez_output.60_55_56_54_3F_A0.1")
+[  107626ms] [PACTL         ] >> pactl set-default-sink bluez_output.60_55_56_54_3F_A0.1
+[  107630ms] [PACTL         ] << exit=0 stdout_bytes=0 stderr_bytes=0
+[  107630ms] [ACTION        ] set_default_sink OK
+[  107630ms] [NOTIFY        ] [Success] 'bluez_output.60_55_56_54_3F_A0.1' is now the default output.
+[  107630ms] [────────────  ] ──── action_refresh ────
+[  107630ms] [APP           ] action_refresh called
+[  107630ms] [────────────  ] ──── fetch_state ────
+[  107630ms] [BACKEND       ] Starting concurrent pactl queries (sinks, sink-inputs, modules, info)
+[  107630ms] [PACTL         ] >> pactl --format=json list sinks
+[  107630ms] [PACTL         ] >> pactl --format=json list sink-inputs
+[  107631ms] [PACTL         ] >> pactl --format=json list modules
+[  107631ms] [PACTL         ] >> pactl info
+[  107643ms] [PACTL         ] << exit=0 stdout_bytes=7784 stderr_bytes=0
+[  107644ms] [PACTL         ] << exit=0 stdout_bytes=6851 stderr_bytes=0
+[  107644ms] [PACTL         ] << exit=0 stdout_bytes=7773 stderr_bytes=0
+[  107644ms] [PACTL         ] << exit=0 stdout_bytes=476 stderr_bytes=0
+[  107644ms] [BACKEND       ] All pactl queries succeeded
+[  107644ms] [PARSE         ] sinks JSON  : 6851 bytes
+[  107644ms] [PARSE         ] sinks JSON preview: [{"index":53,"state":"RUNNING","name":"alsa_output.pci-0000_00_1f.3.analog-stereo","description":"Built-in Audio Analog Stereo","driver":"PipeWire","sample_specification":"s32le 2ch 48000Hz","channel_map":"front-left,front-right","owner_module":4294967295,"mute":false,"volume":{"front-left":{"value":49151,"value_percent":"75%","db":"-7.50 dB"},"front-right":{"value":49151,"value_percent":"75%","db…[+6451]
+[  107644ms] [PARSE         ] sink-inputs : 7773 bytes
+[  107644ms] [PARSE         ] sink-inputs preview: [{"index":96,"driver":"PipeWire","owner_module":null,"client":"65","sink":185,"sample_specification":"float32le 2ch 48000Hz","channel_map":"front-left,front-right","format":"pcm, format.sample_format …[+7573]
+[  107644ms] [PARSE         ] modules JSON: 7784 bytes
+[  107644ms] [PARSE         ] info output : Server String: /run/user/1000/pulse/native↵Library Protocol Version: 35↵Server Protocol Version: 35↵Is Local: yes↵Client Index: 388↵Tile Size: 65472↵User Name: stealthspectre↵Host Name: msi-gp65leopard↵Server Name: PulseAudio (on PipeWire 1.6.4)↵Server Version: 15.0.0↵Default Sample Specification: f…[+176]
+[  107644ms] [PARSER        ] parse_default_sink from 476 chars
+[  107644ms] [PARSER        ] parse_default_sink found: "bluez_output.60_55_56_54_3F_A0.1"
+[  107644ms] [PARSE         ] default_sink name = "bluez_output.60_55_56_54_3F_A0.1"
+[  107644ms] [PARSER        ] parse_sinks: json_len=6851 default="bluez_output.60_55_56_54_3F_A0.1"
+[  107644ms] [PARSER        ] parse_sinks: first sink JSON keys = ["active_port", "balance", "base_volume", "channel_map", "description", "driver", "flags", "formats", "index", "latency", "monitor_source", "mute", "name", "owner_module", "ports", "properties", "sample_specification", "state", "volume"]
+[  107644ms] [PARSE         ] parse_sinks OK: 3 device(s)
+[  107644ms] [DEVICE        ]   idx=53 name="alsa_output.pci-0000_00_1f.3.analog-stereo" type=Physical status=Running is_default=false
+[  107644ms] [DEVICE        ]   idx=185 name="bluez_output.60_55_56_54_3F_A0.1" type=Bluetooth status=Running is_default=true
+[  107644ms] [DEVICE        ]   idx=299 name="combined_all" type=Combined status=Running is_default=false
+[  107644ms] [PARSER        ] parse_combined_groups: json_len=7784
+[  107644ms] [PARSER        ] parse_combined_groups: 18 total modules
+[  107644ms] [PARSER        ] parse_combined_groups: 1 module-combine-sink entries
+[  107644ms] [PARSE         ] parse_combined_groups OK: 1 group(s)
+[  107644ms] [COMBINED      ]   module=0 sink_name="combined_all" members=["alsa_output.pci-0000_00_1f.3.analog-stereo", "bluez_output.60_55_56_54_3F_A0.1"]
+[  107644ms] [COMBINED      ]   Marked device "alsa_output.pci-0000_00_1f.3.analog-stereo" as member of group 0
+[  107644ms] [COMBINED      ]   Marked device "bluez_output.60_55_56_54_3F_A0.1" as member of group 0
+[  107644ms] [PARSER        ] parse_sink_inputs: json_len=7773
+[  107644ms] [PARSE         ] parse_sink_inputs OK: 5 stream(s)
+[  107644ms] [STREAM        ]   idx=96 app="Zen" sink_idx=185
+[  107644ms] [STREAM        ]   idx=148 app="Unknown App" sink_idx=185
+[  107644ms] [STREAM        ]   idx=300 app="Unknown App" sink_idx=53
+[  107644ms] [STREAM        ]   idx=301 app="Unknown App" sink_idx=185
+[  107644ms] [STREAM        ]   idx=369 app="Zen" sink_idx=299
+[  107644ms] [BACKEND       ] fetch_state complete: 3 devices, 5 streams, 1 combined groups
+[  107644ms] [────────────  ] ──── fetch_state END ────
+[  107644ms] [APP           ] action_refresh OK: 3 devices, 5 streams, 1 combined, default="bluez_output.60_55_56_54_3F_A0.1"
+[  107644ms] [APP           ] action_refresh done, loading=false
+[  107644ms] [LOOP          ] Event handler requested redraw/refresh
+[  121222ms] [LOOP          ] Raw event: Key(KeyEvent { code: Down, modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[  121222ms] [KEY           ] screen=Devices code=Down modifiers=KeyModifiers(0x0)
+[  121437ms] [LOOP          ] Raw event: Key(KeyEvent { code: Enter, modifiers: KeyModifiers(0x0), kind: Press, state: KeyEventState(0x0) })
+[  121437ms] [KEY           ] screen=Devices code=Enter modifiers=KeyModifiers(0x0)
+[  124509ms] [LOOP          ] Raw event: Mouse(MouseEvent { kind: Moved, column: 94, row: 21, modifiers: KeyModifiers(0x0) })
+[  177654ms] [LOOP          ] Raw event: Mouse(MouseEvent { kind: Moved, column: 129, row: 33, modifiers: KeyModifiers(0x0) })
+[  177679ms] [LOOP          ] Raw event: Mouse(MouseEvent { kind: Moved, column: 128, row: 33, modifiers: KeyModifiers(0x0) })
+[  177688ms] [LOOP          ] Raw event: Mouse(MouseEvent { kind: Moved, column: 127, row: 33, modifiers: KeyModifiers(0x0) })
+[  177693ms] [LOOP          ] Raw event: Mouse(MouseEvent { kind: Moved, column: 127, row: 32, modifiers: KeyModifiers(0x0) })
+[  177694ms] [LOOP          ] Raw event: Mouse(MouseEvent { kind: Moved, column: 126, row: 32, modifiers: KeyModifiers(0x0) })
+[  177701ms] [LOOP          ] Raw event: Mouse(MouseEvent { kind: Moved, column: 125, row: 32, modifiers: KeyModifiers(0x0) })
+[  177708ms] [LOOP          ] Raw event: Mouse(MouseEvent { kind: Moved, column: 124, row: 32, modifiers: KeyModifiers(0x0) })
+[  177713ms] [LOOP          ] Raw event: Mouse(MouseEvent { kind: Moved, column: 123, row: 32, modifiers: KeyModifiers(0x0) })
+[  177718ms] [LOOP          ] Raw event: Mouse(MouseEvent { kind: Moved, column: 122, row: 32, modifiers: KeyModifiers(0x0) })
+[  177723ms] [LOOP          ] Raw event: Mouse(MouseEvent { kind: Moved, column: 121, row: 32, modifiers: KeyModifiers(0x0) })
+[  177729ms] [LOOP          ] Raw event: Mouse(MouseEvent { kind: Moved, column: 121, row: 31, modifiers: KeyModifiers(0x0) })
+[  177730ms] [LOOP          ] Raw event: Mouse(MouseEvent { kind: Moved, column: 120, row: 31, modifiers: KeyModifiers(0x0) })
+[  177737ms] [LOOP          ] Raw event: Mouse(MouseEvent { kind: Moved, column: 119, row: 31, modifiers: KeyModifiers(0x0) })
+[  177743ms] [LOOP          ] Raw event: Mouse(MouseEvent { kind: Moved, column: 118, row: 31, modifiers: KeyModifiers(0x0) })
+[  177752ms] [LOOP          ] Raw event: Mouse(MouseEvent { kind: Moved, column: 117, row: 31, modifiers: KeyModifiers(0x0) })
+[  177762ms] [LOOP          ] Raw event: Mouse(MouseEvent { kind: Moved, column: 116, row: 31, modifiers: KeyModifiers(0x0) })
+[  177778ms] [LOOP          ] Raw event: Mouse(MouseEvent { kind: Moved, column: 115, row: 31, modifiers: KeyModifiers(0x0) })
+[  177781ms] [LOOP          ] Raw event: Mouse(MouseEvent { kind: Moved, column: 115, row: 30, modifiers: KeyModifiers(0x0) })
+[  177794ms] [LOOP          ] Raw event: Mouse(MouseEvent { kind: Moved, column: 114, row: 30, modifiers: KeyModifiers(0x0) })
+[  177814ms] [LOOP          ] Raw event: Mouse(MouseEvent { kind: Moved, column: 113, row: 30, modifiers: KeyModifiers(0x0) })
+[  177832ms] [LOOP          ] Raw event: Mouse(MouseEvent { kind: Moved, column: 112, row: 30, modifiers: KeyModifiers(0x0) })
+[  177846ms] [LOOP          ] Raw event: Mouse(MouseEvent { kind: Moved, column: 112, row: 29, modifiers: KeyModifiers(0x0) })
+[  177853ms] [LOOP          ] Raw event: Mouse(MouseEvent { kind: Moved, column: 111, row: 29, modifiers: KeyModifiers(0x0) })
+[  177871ms] [LOOP          ] Raw event: Mouse(MouseEvent { kind: Moved, column: 110, row: 29, modifiers: KeyModifiers(0x0) })
+[  177894ms] [LOOP          ] Raw event: Mouse(MouseEvent { kind: Moved, column: 109, row: 29, modifiers: KeyModifiers(0x0) })
