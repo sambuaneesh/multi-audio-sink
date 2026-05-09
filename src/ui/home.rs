@@ -20,7 +20,7 @@ pub fn render(f: &mut Frame, app: &App, tick: u64) {
         .constraints([
             Constraint::Length(3),  // header
             Constraint::Min(0),     // body
-            Constraint::Length(3),  // footer hint bar
+            Constraint::Length(4),  // footer hint bar
         ])
         .split(area);
 
@@ -233,6 +233,7 @@ fn render_footer(f: &mut Frame, area: Rect) {
     ]);
     let footer = Paragraph::new(hints)
         .alignment(Alignment::Center)
+        .wrap(ratatui::widgets::Wrap { trim: true })
         .block(Block::default().borders(Borders::ALL).border_type(BorderType::Rounded).border_style(Style::default().fg(Palette::BORDER)).bg(Palette::BG_PANEL));
     f.render_widget(footer, area);
 }

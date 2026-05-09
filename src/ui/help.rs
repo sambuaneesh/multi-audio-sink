@@ -16,7 +16,7 @@ pub fn render(f: &mut Frame) {
         .constraints([
             Constraint::Length(3),
             Constraint::Min(0),
-            Constraint::Length(3),
+            Constraint::Length(4),
         ])
         .split(area);
 
@@ -41,6 +41,7 @@ pub fn render(f: &mut Frame) {
     // Footer
     let footer = Paragraph::new(hint_line(&[("Esc / ?", "close help")]))
         .alignment(Alignment::Center)
+        .wrap(ratatui::widgets::Wrap { trim: true })
         .block(Block::default().borders(Borders::ALL).border_type(BorderType::Rounded).border_style(Style::default().fg(Palette::BORDER)).bg(Palette::BG_PANEL));
     f.render_widget(footer, chunks[2]);
 }

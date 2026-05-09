@@ -17,7 +17,7 @@ pub fn render(f: &mut Frame, app: &App) {
         .constraints([
             Constraint::Length(3), // wizard step header
             Constraint::Min(0),    // main content
-            Constraint::Length(3), // hints
+            Constraint::Length(4), // hints
         ])
         .split(area);
 
@@ -338,6 +338,7 @@ fn render_hints(f: &mut Frame, app: &App, area: Rect) {
 
     let footer = Paragraph::new(hints)
         .alignment(Alignment::Center)
+        .wrap(ratatui::widgets::Wrap { trim: true })
         .block(Block::default().borders(Borders::ALL).border_type(BorderType::Rounded).border_style(Style::default().fg(Palette::BORDER)).bg(Palette::BG_PANEL));
     f.render_widget(footer, area);
 }
