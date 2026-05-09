@@ -89,6 +89,14 @@ impl AudioBackend {
                     dlog!("COMBINED", "  Marked device {:?} as member of group {}", d.name, group.module_index);
                 }
             }
+            
+            // Also explicitly mark the sink itself as a Combined type device.
+            // This is necessary because PipeWire might not add "combined" to the sink's description
+            // or provide PulseAudio-specific properties if the user chose a custom name.
+            if let Some(d) = devices.iter_mut().find(|d| d.name == group.sink_name) {
+                d.device_type = DeviceType::Combined;
+                dlog!("COMBINED", "  Forced device {:?} type to Combined", d.name);
+            }
         }
 
         // Detect stale combined devices
