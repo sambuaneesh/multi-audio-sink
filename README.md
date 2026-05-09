@@ -25,6 +25,7 @@ Want audio on:
 * Bluetooth headphones + speakers?
 * HDMI monitor + AUX headset?
 * Multiple devices simultaneously?
+* Different applications mapped to different outputs so multiple people can watch and listen to different things at the same time?
 
 Normally that means:
 * remembering `pactl` commands
@@ -58,6 +59,7 @@ You should never need to memorize `pactl load-module module-combine-sink ...` ag
 | --- | :---: |
 | Combine multiple audio outputs | ✅ |
 | Play audio on Bluetooth + AUX simultaneously | ✅ |
+| Map distinct audio sessions to different devices so multiple people can use it | ✅ |
 | Switch default sinks instantly | ✅ |
 | Move running applications between outputs | ✅ |
 | Manage suspended Bluetooth devices | ✅ |
@@ -87,6 +89,8 @@ Quickly move between speakers, headphones, monitors, Bluetooth devices, virtual 
 
 ### Move running apps without restarting them
 Send Firefox, Spotify, Discord, games, or media players to different outputs live. Select the stream, press `Enter`, and pick the destination output from a quick menu.
+
+**Perfect for multi-user setups:** Easily map distinct audio sessions to different devices so multiple people can use the same computer simultaneously. You can send a movie's audio to the TV via HDMI while sending a game's audio to your Bluetooth headset—with zero conflict.
 
 ---
 
