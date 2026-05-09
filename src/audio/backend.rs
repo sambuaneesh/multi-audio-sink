@@ -111,6 +111,16 @@ impl AudioBackend {
         let mut combined_groups = combined_groups;
         for g in combined_groups.iter_mut() {
             g.is_default = g.sink_name == default_sink;
+            // In PipeWire, pactl list modules omits the index, causing it to default to 0.
+            // We can recover it from the owner_module field of the corresponding Sink.
+            if g.module_index == 0 {
+                if let Some(dev) = devices.iter().find(|d| d.name == g.sink_name) {
+                    if let Some(mi) = dev.module_index {
+                        g.module_index = mi;
+                        dlog!("COMBINED", "Recovered module_index {} for {}", mi, g.sink_name);
+                    }
+                }
+            }
         }
 
         let streams = match parser::parse_sink_inputs(&inputs_json, &devices) {
