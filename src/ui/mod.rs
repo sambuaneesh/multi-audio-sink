@@ -6,6 +6,8 @@ pub mod home;
 pub mod streams;
 pub mod widgets;
 
+pub mod select_device;
+
 use ratatui::Frame;
 use crate::app::{App, Screen};
 use crate::ui::widgets::render_notification;
@@ -30,6 +32,11 @@ pub fn render(f: &mut Frame, app: &App, tick: u64) {
             // Render underlying screen then overlay dialog
             devices::render(f, app);
             confirm::render(f, app, action);
+        }
+        Screen::SelectDevice { stream_index, cursor } => {
+            // Render underlying screen then overlay dialog
+            streams::render(f, app);
+            select_device::render(f, app, *stream_index, *cursor);
         }
     }
 

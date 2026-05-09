@@ -27,6 +27,7 @@ pub async fn handle_event(app: &mut App, event: Event) -> bool {
             Screen::Combine => handle_combine(app, key).await,
             Screen::Help => handle_help(app, key),
             Screen::Confirm(action) => handle_confirm(app, key, action).await,
+            Screen::SelectDevice { stream_index, cursor } => handle_select_device(app, key, stream_index, cursor).await,
         };
 
         needs_refresh
@@ -209,16 +210,14 @@ async fn handle_streams(app: &mut App, key: KeyEvent) -> bool {
             false
         }
         KeyCode::Enter => {
-            // Move selected stream: cycle through available sinks
-            // For now, prompt user to pick a device — represented as confirm
             if let Some(stream) = app.selected_stream() {
-                // Move to default sink as quick action
-                let sink_name = app.audio_state.default_sink_name.clone();
-                let stream_idx = stream.index;
-                if !sink_name.is_empty() {
-                    app.action_move_stream(stream_idx, sink_name).await;
-                    return true;
-                }
+                // Find index of current sink to set initial cursor
+                let current_sink_name = &stream.sink_name;
+                let cursor = app.audio_state.devices.iter()
+                    .position(|d| &d.name == current_sink_name)
+                    .unwrap_or(0);
+                    
+                app.screen = Screen::SelectDevice { stream_index: stream.index, cursor };
             }
             false
         }
@@ -438,3 +437,42 @@ fn handle_help(app: &mut App, key: KeyEvent) -> bool {
     }
     false
 }
+
+// ─── Select Device ────────────────────────────────────────────────────────────
+
+async fn handle_select_device(app: &mut App, key: KeyEvent, stream_index: u32, cursor: usize) -> bool {
+    let devices_len = app.audio_state.devices.len();
+    if devices_len == 0 {
+        app.screen = Screen::Streams;
+        return false;
+    }
+
+    let max = devices_len.saturating_sub(1);
+
+    match key.code {
+        KeyCode::Esc | KeyCode::Char('q') | KeyCode::Char('c') => {
+            app.screen = Screen::Streams;
+            false
+        }
+        KeyCode::Up | KeyCode::Char('k') => {
+            let new_cursor = cursor.saturating_sub(1);
+            app.screen = Screen::SelectDevice { stream_index, cursor: new_cursor };
+            false
+        }
+        KeyCode::Down | KeyCode::Char('j') => {
+            let new_cursor = if cursor < max { cursor + 1 } else { cursor };
+            app.screen = Screen::SelectDevice { stream_index, cursor: new_cursor };
+            false
+        }
+        KeyCode::Enter => {
+            if let Some(device) = app.audio_state.devices.get(cursor) {
+                let sink_name = device.name.clone();
+                app.action_move_stream(stream_index, sink_name).await;
+            }
+            app.screen = Screen::Streams;
+            true
+        }
+        _ => false,
+    }
+}
+

@@ -15,6 +15,7 @@ pub enum Screen {
     Combine,
     Help,
     Confirm(ConfirmAction),
+    SelectDevice { stream_index: u32, cursor: usize },
 }
 
 /// Actions that require confirmation before executing

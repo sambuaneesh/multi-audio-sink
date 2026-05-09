@@ -118,11 +118,7 @@ fn render_stream_detail(f: &mut Frame, app: &App, area: ratatui::layout::Rect) {
         .map(|d| d.display_name().to_string())
         .unwrap_or_else(|| stream.sink_name.clone());
 
-    let default_name = app
-        .audio_state
-        .device_by_name(&app.audio_state.default_sink_name)
-        .map(|d| d.display_name().to_string())
-        .unwrap_or_else(|| app.audio_state.default_sink_name.clone());
+
 
     let on_default = stream.sink_name == app.audio_state.default_sink_name;
 
@@ -159,14 +155,10 @@ fn render_stream_detail(f: &mut Frame, app: &App, area: ratatui::layout::Rect) {
     lines.push(Line::raw(""));
     lines.push(Line::from(Span::styled("─── Quick Actions ────────────────────", Style::default().fg(Palette::BORDER))));
 
-    if !on_default {
         lines.push(Line::from(Span::styled(
-            format!("  [Enter] Move to default output\n          ({})", default_name),
+            "  [Enter] Move to specific output",
             Style::default().fg(Palette::DIM),
         )));
-    } else {
-        lines.push(Line::from(Span::styled("  ✓ Already on the default output", Style::default().fg(Palette::GREEN))));
-    }
 
     lines.push(Line::from(Span::styled("  [M] Move ALL streams to default", Style::default().fg(Palette::DIM))));
     lines.push(Line::raw(""));
