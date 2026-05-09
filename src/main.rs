@@ -23,10 +23,10 @@ use crate::audio::backend::AudioBackend;
 
 #[derive(Parser, Debug)]
 #[command(
-    name = "audio_tui",
+    name = "mas",
     version = "0.1.0",
     about = "Human-friendly TUI for PipeWire/PulseAudio audio management",
-    long_about = "AudioCtl — manage your Linux audio outputs without memorizing commands.\n\nRequires PipeWire (or PulseAudio) with pactl available.",
+    long_about = "Multi Audio Sink — manage your Linux audio outputs without memorizing commands.\n\nRequires PipeWire (or PulseAudio) with pactl available.",
 )]
 struct Cli {
     /// Tick rate in milliseconds (controls notification expiry checks)
@@ -37,15 +37,15 @@ struct Cli {
     #[arg(long)]
     no_health_check: bool,
 
-    /// Enable debug logging to a file (default path: audio_tui_debug.log).
+    /// Enable debug logging to a file (default path: mas_debug.log).
     /// All events — pactl calls, parse results, key presses, state transitions —
     /// are recorded step-by-step with millisecond timestamps.
     ///
     /// Examples:
-    ///   audio_tui --debug
-    ///   audio_tui --debug /tmp/mytrace.log
+    ///   mas --debug
+    ///   mas --debug /tmp/mytrace.log
     #[arg(long, value_name = "LOG_FILE", num_args = 0..=1,
-          default_missing_value = "audio_tui_debug.log")]
+          default_missing_value = "mas_debug.log")]
     debug: Option<String>,
 }
 
@@ -59,15 +59,15 @@ async fn main() -> Result<()> {
     if let Some(ref log_path) = cli.debug {
         match logger::init(log_path) {
             Ok(()) => {
-                eprintln!("AudioCtl: debug logging enabled → {}", log_path);
+                eprintln!("Multi Audio Sink: debug logging enabled → {}", log_path);
             }
             Err(e) => {
-                eprintln!("AudioCtl: WARNING — could not open log file {:?}: {}", log_path, e);
+                eprintln!("Multi Audio Sink: WARNING — could not open log file {:?}: {}", log_path, e);
             }
         }
     }
 
-    dlog!("INIT", "AudioCtl starting up");
+    dlog!("INIT", "Multi Audio Sink starting up");
     dlog!("INIT", "CLI args: tick_rate={}ms no_health_check={} debug={:?}",
         cli.tick_rate, cli.no_health_check, cli.debug);
 
@@ -90,11 +90,11 @@ async fn main() -> Result<()> {
         dlog!("INIT", "Running health check (pactl info)");
         match backend.check_health().await {
             Ok(server_name) => {
-                eprintln!("AudioCtl: connected to {}", server_name);
+                eprintln!("Multi Audio Sink: connected to {}", server_name);
                 dlog!("INIT", "Health check passed: server={:?}", server_name);
             }
             Err(e) => {
-                eprintln!("AudioCtl: Warning — {}", e);
+                eprintln!("Multi Audio Sink: Warning — {}", e);
                 eprintln!("Launching anyway. Press F5 to retry after starting PipeWire.");
                 dlog!("INIT", "Health check FAILED: {}", e);
             }
@@ -144,12 +144,12 @@ async fn main() -> Result<()> {
 
     if let Err(e) = result {
         dlog!("INIT", "FATAL error from run_app: {}", e);
-        eprintln!("AudioCtl exited with error: {}", e);
+        eprintln!("Multi Audio Sink exited with error: {}", e);
         std::process::exit(1);
     }
 
     dlog!("INIT", "Clean exit");
-    println!("AudioCtl — goodbye!");
+    println!("Multi Audio Sink — goodbye!");
     Ok(())
 }
 

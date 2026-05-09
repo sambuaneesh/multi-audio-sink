@@ -43,7 +43,7 @@ fn render_header(f: &mut Frame, app: &App, area: Rect, tick: u64) {
     // Logo
     let logo = Paragraph::new(Line::from(vec![
         Span::styled("🔊 ", Style::default()),
-        Span::styled("AudioCtl", Style::default().fg(Palette::ACCENT_BRIGHT).add_modifier(Modifier::BOLD)),
+        Span::styled("Multi Audio Sink", Style::default().fg(Palette::ACCENT_BRIGHT).add_modifier(Modifier::BOLD)),
     ]))
     .block(Block::default().borders(Borders::ALL).border_type(BorderType::Rounded).border_style(Style::default().fg(Palette::BORDER)).bg(Palette::BG_PANEL));
     f.render_widget(logo, h[0]);

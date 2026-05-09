@@ -1,4 +1,4 @@
-# 🔊 AudioCtl — Human-friendly Audio Management TUI
+# 🔊 Multi Audio Sink — Human-friendly Audio Management TUI
 
 A polished terminal user interface for managing audio outputs on Linux systems running
 **PipeWire** (or PulseAudio-compatible setups). Designed for Arch Linux. No commands to memorize.
@@ -11,7 +11,7 @@ A polished terminal user interface for managing audio outputs on Linux systems r
 
 ## What it does
 
-| You want to…                          | AudioCtl does it with…       |
+| You want to…                          | Multi Audio Sink does it with…       |
 |---------------------------------------|------------------------------|
 | See all audio outputs                 | Home dashboard + Devices tab |
 | Play sound on two devices at once     | Combine wizard (`C`)         |
@@ -26,7 +26,7 @@ A polished terminal user interface for managing audio outputs on Linux systems r
 ## Screenshots (key screens)
 
 ```
-╭─ 🔊 AudioCtl ─────────────────────╮╭── ★ Default: Speakers ────────────╮╭─ 2 sinks  1 stream ──╮
+╭─ 🔊 Multi Audio Sink ─────────────────────╮╭── ★ Default: Speakers ────────────╮╭─ 2 sinks  1 stream ──╮
 ╰────────────────────────────────────╯╰───────────────────────────────────╯╰──────────────────────╯
 
 ╭─── 📡 Output Devices ─────────────────────╮╭── 🔀 Combined Outputs ────╮╭─ 🎵 Streams ───────────╮
@@ -63,12 +63,12 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 source ~/.cargo/env
 
 # Clone and build
-git clone <repo-url> audio_tui
-cd audio_tui
+git clone <repo-url> multi-audio-sink
+cd multi-audio-sink
 cargo build --release
 
 # Run
-./target/release/audio_tui
+./target/release/mas
 ```
 
 ### Install to PATH
@@ -76,13 +76,13 @@ cargo build --release
 ```bash
 cargo install --path .
 # or
-sudo install -m755 target/release/audio_tui /usr/local/bin/audio_tui
+sudo install -m755 target/release/mas /usr/local/bin/mas
 ```
 
 ### AUR (if packaged)
 
 ```bash
-yay -S audio_tui  # once available
+yay -S multi-audio-sink  # once available
 ```
 
 ---
@@ -90,11 +90,11 @@ yay -S audio_tui  # once available
 ## Usage
 
 ```bash
-audio_tui                  # Launch normally
-audio_tui --debug          # Enable step-by-step debug logging to audio_tui_debug.log
-audio_tui --tick-rate 100  # Faster animation (ms)
-audio_tui --no-health-check  # Skip pactl connectivity check
-audio_tui --help
+mas                  # Launch normally
+mas --debug          # Enable step-by-step debug logging to mas_debug.log
+mas --tick-rate 100  # Faster animation (ms)
+mas --no-health-check  # Skip pactl connectivity check
+mas --help
 ```
 
 ---
@@ -179,7 +179,7 @@ Symptom: Device visible but shows 💤, can't use it
    ```bash
    bluetoothctl connect <MAC>
    ```
-2. Select the device in AudioCtl and press `r` to resume it.
+2. Select the device in Multi Audio Sink and press `r` to resume it.
 3. If still suspended after connecting, try:
    ```bash
    pactl set-sink-port bluez_sink.<...> headset-output
@@ -220,7 +220,7 @@ Symptom: An old combined sink shows "⚠ Stale" status
 ```
 
 Combined sinks are loaded as PipeWire/PA modules and don't survive reboot by default.
-AudioCtl will detect stale combined devices (module unloaded but sink still visible)
+Multi Audio Sink will detect stale combined devices (module unloaded but sink still visible)
 and mark them. Use `R` to clean them up.
 
 To persist a combined sink across reboots, add to `/etc/pulse/default.pa` or
@@ -234,7 +234,7 @@ load-module module-combine-sink sink_name=combined_main slaves=sink1,sink2
 ## Architecture
 
 ```
-audio_tui/
+multi-audio-sink/
 ├── src/
 │   ├── main.rs           # Entry point, terminal setup, async event loop
 │   ├── app.rs            # App state machine, screens, wizard state, notifications

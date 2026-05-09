@@ -1,6 +1,6 @@
 /// Global debug logger — writes timestamped events to a file.
 ///
-/// Activated via `--debug [path]` (default: `audio_tui_debug.log`).
+/// Activated via `--debug [path]` (default: `mas_debug.log`).
 /// All subsystems call `log!()` / `log_section!()` macros; when debug mode
 /// is off those calls compile to nothing (zero-cost in production).
 use std::fs::{File, OpenOptions};
@@ -75,7 +75,7 @@ pub fn init(path: &str) -> std::io::Result<()> {
     guard.enable(path)?;
     // Write session header
     guard.write_entry("INIT", &format!(
-        "=== AudioCtl debug session started === log: {}",
+        "=== Multi Audio Sink debug session started === log: {}",
         path
     ));
     guard.write_entry("INIT", &format!(

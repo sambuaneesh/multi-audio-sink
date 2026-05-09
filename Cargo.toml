@@ -1,13 +1,13 @@
 [package]
-name = "audio_tui"
+name = "mas"
 version = "0.1.0"
 edition = "2021"
 description = "Human-friendly TUI for PipeWire/PulseAudio audio management on Linux"
-authors = ["audio_tui contributors"]
+authors = ["multi-audio-sink contributors"]
 license = "MIT"
 
 [[bin]]
-name = "audio_tui"
+name = "mas"
 path = "src/main.rs"
 
 [dependencies]

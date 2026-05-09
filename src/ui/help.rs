@@ -22,7 +22,7 @@ pub fn render(f: &mut Frame) {
 
     // Title
     let title = Paragraph::new(Line::from(vec![
-        Span::styled("🔊 AudioCtl", Style::default().fg(Palette::ACCENT_BRIGHT).add_modifier(Modifier::BOLD)),
+        Span::styled("🔊 Multi Audio Sink", Style::default().fg(Palette::ACCENT_BRIGHT).add_modifier(Modifier::BOLD)),
         Span::styled(" — Help & Keyboard Reference", Style::default().fg(Palette::DIM)),
     ]))
     .alignment(Alignment::Center)
@@ -114,7 +114,7 @@ fn render_actions_column(f: &mut Frame, area: ratatui::layout::Rect) {
         key_row("N / Esc", "Cancel"),
         Line::raw(""),
         section("About"),
-        Line::from(Span::styled("  AudioCtl — PipeWire/PulseAudio", Style::default().fg(Palette::MUTED))),
+        Line::from(Span::styled("  Multi Audio Sink — PipeWire/PulseAudio", Style::default().fg(Palette::MUTED))),
         Line::from(Span::styled("  TUI for Arch Linux. Uses pactl.", Style::default().fg(Palette::MUTED))),
     ];
 
