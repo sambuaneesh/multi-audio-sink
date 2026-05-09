@@ -1,6 +1,6 @@
 [package]
 name = "mas"
-version = "0.1.0"
+version = "1.1.0"
 edition = "2021"
 description = "Human-friendly TUI for PipeWire/PulseAudio audio management on Linux"
 authors = ["multi-audio-sink contributors"]
