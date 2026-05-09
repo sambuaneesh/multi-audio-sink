@@ -21,24 +21,7 @@ A polished terminal user interface for managing audio outputs on Linux systems r
 | Wake up a suspended Bluetooth device  | `r` on the device            |
 | Know what's going on right now        | Home screen, always visible  |
 
----
 
-## Screenshots (key screens)
-
-```
-╭─ 🔊 Multi Audio Sink ─────────────────────╮╭── ★ Default: Speakers ────────────╮╭─ 2 sinks  1 stream ──╮
-╰────────────────────────────────────╯╰───────────────────────────────────╯╰──────────────────────╯
-
-╭─── 📡 Output Devices ─────────────────────╮╭── 🔀 Combined Outputs ────╮╭─ 🎵 Streams ───────────╮
-│ ▸ ▶ [PHY] Speakers ★                      ││  No combined outputs.     ││ 🔊 Firefox — YouTube   │
-│   💤 [BT]  AirPods Pro                    ││  Press [C] on devices to  ││      65%               │
-│   ⏸ [PHY] HDMI Output                    ││  create one.              │╰────────────────────────╯
-╰────────────────────────────────────────────╯╰───────────────────────────╯
-
-  [D] Devices  [S] Streams  [C] Combine  [?] Help  [F5] Refresh  [Q] Quit
-```
-
----
 
 ## Installation (Arch Linux)
 
@@ -79,10 +62,12 @@ cargo install --path .
 sudo install -m755 target/release/mas /usr/local/bin/mas
 ```
 
-### AUR (if packaged)
+### AUR
+
+The package is available on the Arch User Repository! You can easily install it using an AUR helper like `yay`:
 
 ```bash
-yay -S multi-audio-sink  # once available
+yay -S multi-audio-sink
 ```
 
 ---
